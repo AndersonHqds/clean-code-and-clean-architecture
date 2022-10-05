@@ -1,9 +1,12 @@
 import ItemRepositoryMemory from "../../src/infra/repository/memory/itemRepositoryMemory";
 import PreviewOrder from "../../src/application/PreviewOrder";
+import ItemRepositoryDatabase from "../../src/infra/repository/database/ItemRepositoryDatabase";
+import PgPromiseAdapter from "../../src/infra/database/PgPromiseAdapter";
 
 test("Deve simular um pedido", async function () {
-  // const itemRepository = new ItemRepositoryDatabase();
-  const itemRepository = new ItemRepositoryMemory();
+  const connection = new PgPromiseAdapter();
+  const itemRepository = new ItemRepositoryDatabase(connection);
+  // const itemRepository = new ItemRepositoryMemory();
   const orderService = new PreviewOrder(itemRepository);
   const output = await orderService.execute({
     cpf: "886.634.854-68",
@@ -14,4 +17,5 @@ test("Deve simular um pedido", async function () {
     ],
   });
   expect(output.total).toBe(6350);
+  await connection.close();
 });

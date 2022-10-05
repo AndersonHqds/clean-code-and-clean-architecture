@@ -71,3 +71,12 @@ test("Deve criar um pedido com 3 itens e calcular o frete", function () {
   const total = order.getTotal();
   expect(total).toBe(6350);
 });
+
+test("Deve criar um pedido e gerar o código", function () {
+  const order = new Order("886.634.854-68", new Date("2022-03-01T10:00:00"), 1);
+  order.addItem(new Item(1, "Guitarra", 1000), 1);
+  order.addItem(new Item(2, "Amplificador", 5000), 1);
+  order.addItem(new Item(3, "Cabo", 30), 3);
+  const code = order.getCode();
+  expect(code).toBe("202200000001");
+});

@@ -2,6 +2,7 @@ import CLIManager from "../../cli/CLIManager";
 import Connection from "../../database/Connection";
 import ItemRepositoryMemory from "../../../infra/repository/memory/itemRepositoryMemory";
 import PreviewOrder from "../../../application/PreviewOrder";
+import ItemRepositoryDatabase from "../../repository/database/ItemRepositoryDatabase";
 
 // Interface Adapter
 export default class CliController {
@@ -22,8 +23,7 @@ export default class CliController {
     });
 
     cliManager.addCommand("preview", async () => {
-      // const itemRepository = new ItemRepositoryDatabase(connection);
-      const itemRepository = new ItemRepositoryMemory();
+      const itemRepository = new ItemRepositoryDatabase(connection);
       const previewOrder = new PreviewOrder(itemRepository);
       const input = { cpf, orderItems };
       const output = await previewOrder.execute(input);

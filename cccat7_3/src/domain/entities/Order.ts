@@ -2,17 +2,24 @@ import Coupon from "./Coupon";
 import Cpf from "./Cpf";
 import FreightCalculator from "./FreightCalculator";
 import Item from "./Item";
-import OrderItem from "../../OrderItem";
+import OrderCode from "./OrderCode";
+import OrderItem from "./OrderItem";
 
 export default class Order {
   orderItems: OrderItem[];
   cpf: Cpf;
   coupon?: Coupon;
   freight = 0;
+  code: OrderCode;
 
-  constructor(cpf: string, readonly date: Date = new Date()) {
+  constructor(
+    cpf: string,
+    readonly date: Date = new Date(),
+    readonly sequence: number = 1
+  ) {
     this.cpf = new Cpf(cpf);
     this.orderItems = [];
+    this.code = new OrderCode(date, sequence);
   }
 
   addItem(item: Item, quantity: number) {
@@ -25,6 +32,10 @@ export default class Order {
   addCoupon(coupon: Coupon) {
     if (coupon.isExpired(this.date)) return;
     this.coupon = coupon;
+  }
+
+  getCode() {
+    return this.code.value;
   }
 
   getTotal() {

@@ -1,3 +1,5 @@
+CREATE SCHEMA ccca;
+
 drop table if exists ccca.order_item;
 drop table if exists ccca.order;
 drop table if exists ccca.coupon;
