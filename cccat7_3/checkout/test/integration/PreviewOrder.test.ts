@@ -1,4 +1,3 @@
-import ItemRepositoryMemory from "../../src/infra/repository/memory/itemRepositoryMemory";
 import PreviewOrder from "../../src/application/PreviewOrder";
 import ItemRepositoryDatabase from "../../src/infra/repository/database/ItemRepositoryDatabase";
 import PgPromiseAdapter from "../../src/infra/database/PgPromiseAdapter";

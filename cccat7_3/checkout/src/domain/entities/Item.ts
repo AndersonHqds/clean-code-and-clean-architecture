@@ -1,4 +1,5 @@
 import Dimension from "./Dimension";
+import OrderItem from "./OrderItem";
 
 export default class Item {
   constructor(
@@ -14,5 +15,9 @@ export default class Item {
 
   getDensity() {
     return this.dimension.getDensity();
+  }
+
+  createOrderItem(quantity: number) {
+    return new OrderItem(this.idItem, this.price, quantity);
   }
 }

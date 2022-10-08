@@ -3,12 +3,13 @@ import Cpf from "./Cpf";
 import FreightCalculator from "./FreightCalculator";
 import Item from "./Item";
 import OrderCode from "./OrderCode";
+import OrderCoupon from "./OrderCoupon";
 import OrderItem from "./OrderItem";
 
 export default class Order {
   orderItems: OrderItem[];
   cpf: Cpf;
-  coupon?: Coupon;
+  coupon?: OrderCoupon;
   freight = 0;
   code: OrderCode;
 
@@ -25,13 +26,13 @@ export default class Order {
   addItem(item: Item, quantity: number) {
     if (this.orderItems.some((orderItem) => orderItem.idItem === item.idItem))
       throw new Error("Duplicated items");
-    this.orderItems.push(new OrderItem(item.idItem, item.price, quantity));
+    this.orderItems.push(item.createOrderItem(quantity));
     this.freight += FreightCalculator.calculate(item) * quantity;
   }
 
   addCoupon(coupon: Coupon) {
     if (coupon.isExpired(this.date)) return;
-    this.coupon = coupon;
+    this.coupon = coupon.createOrderCoupon();
   }
 
   getCode() {

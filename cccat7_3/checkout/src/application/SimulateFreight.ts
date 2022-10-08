@@ -1,24 +1,39 @@
 import FreightCalculator from "../domain/entities/FreightCalculator";
 import Order from "../domain/entities/Order";
 import ItemRepository from "../domain/repository/ItemRepository";
+import CalculateFreightGateway from "./gateway/CalculateFreightGateway";
 
 // usecase
 export default class SimulateFreight {
-  constructor(readonly itemRepository: ItemRepository) {}
+  constructor(
+    readonly itemRepository: ItemRepository,
+    readonly calculateFreightGateway: CalculateFreightGateway
+  ) {}
 
   async execute(input: Input): Promise<Output> {
-    let total = 0;
+    const orderItems = [];
     for (const orderItem of input.orderItems) {
       const item = await this.itemRepository.getItem(orderItem.idItem);
-      total += FreightCalculator.calculate(item) * orderItem.quantity;
+      orderItems.push({
+        volume: item.getVolume(),
+        density: item.getDensity(),
+        quantity: orderItem.quantity,
+      });
     }
+    const output = await this.calculateFreightGateway.calculate({
+      from: input.from,
+      to: input.to,
+      orderItems,
+    });
     return {
-      total,
+      total: output.total,
     };
   }
 }
 
 type Input = {
+  from: string;
+  to: string;
   orderItems: { idItem: number; quantity: number }[];
 };
 
