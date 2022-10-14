@@ -1,4 +1,3 @@
-import FreightCalculator from "../domain/entities/FreightCalculator";
 import Order from "../domain/entities/Order";
 import ItemRepository from "../domain/repository/ItemRepository";
 import CalculateFreightGateway from "./gateway/CalculateFreightGateway";
