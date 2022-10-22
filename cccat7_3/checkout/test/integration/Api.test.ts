@@ -1,6 +1,6 @@
 import axios from "axios";
 
-test.skip("Deve simular uma compra", async () => {
+test("Deve simular uma compra", async () => {
   const response = await axios({
     url: "http://localhost:3000/orderPreview",
     method: "post",
@@ -14,5 +14,5 @@ test.skip("Deve simular uma compra", async () => {
     },
   });
   const output = response.data;
-  expect(output.total).toBe(6350);
+  expect(output.total).toBe(6090);
 });

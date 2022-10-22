@@ -1,21 +1,21 @@
 import Order from "../domain/entities/Order";
-import ItemRepository from "../domain/repository/ItemRepository";
 import CalculateFreightGateway from "./gateway/CalculateFreightGateway";
+import GetItemGateway from "./gateway/GetItemGateway";
 
 // usecase
 export default class SimulateFreight {
   constructor(
-    readonly itemRepository: ItemRepository,
-    readonly calculateFreightGateway: CalculateFreightGateway
+    readonly calculateFreightGateway: CalculateFreightGateway,
+    readonly getItemGateway: GetItemGateway
   ) {}
 
   async execute(input: Input): Promise<Output> {
     const orderItems = [];
     for (const orderItem of input.orderItems) {
-      const item = await this.itemRepository.getItem(orderItem.idItem);
+      const item = await this.getItemGateway.execute(orderItem.idItem);
       orderItems.push({
-        volume: item.getVolume(),
-        density: item.getDensity(),
+        volume: item.volume,
+        density: item.density,
         quantity: orderItem.quantity,
       });
     }

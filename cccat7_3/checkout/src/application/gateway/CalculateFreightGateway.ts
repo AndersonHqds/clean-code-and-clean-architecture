@@ -5,7 +5,7 @@ export default interface CalculateFreightGateway {
 export type Input = {
   from: string;
   to: string;
-  orderItems: { volume: number; density: number; quantity: number }[];
+  orderItems: { volume?: number; density?: number; quantity: number }[];
 };
 
 export type Output = {
