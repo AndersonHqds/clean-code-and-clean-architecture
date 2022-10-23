@@ -4,7 +4,7 @@ import PgPromiseAdapter from "../../src/infra/database/PgPromiseAdapter";
 import PreviewOrder from "../../src/application/PreviewOrder";
 import GetItemHttpGateway from "../../src/infra/gateway/GetItemHttpGateway";
 
-test("Deve testar o CLI", async function () {
+test.skip("Deve testar o CLI", async function () {
   const inputDevice = { onData: () => {} };
   const outputDevice = { write: () => {} };
   const connection = new PgPromiseAdapter();

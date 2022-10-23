@@ -6,9 +6,12 @@ import Item from "../../src/domain/entities/Item";
 import PgPromiseAdapter from "../../src/infra/database/PgPromiseAdapter";
 import CalculateFreightHttpGateway from "../../src/infra/gateway/CalculateFreightHttpGateway";
 import GetItemHttpGateway from "../../src/infra/gateway/GetItemHttpGateway";
+import RabbitMQAdapter from "../../src/infra/queue/RabbitMqAdapter";
 import OrderRepositoryDatabase from "../../src/infra/repository/database/OrderRepositoryDatabase";
 
 test("Deve fazer um pedido", async function () {
+  const queue = new RabbitMQAdapter();
+  await queue.connect();
   const connection = new PgPromiseAdapter();
   const orderRepository = new OrderRepositoryDatabase(connection);
   await orderRepository.clean();
@@ -25,23 +28,24 @@ test("Deve fazer um pedido", async function () {
       console.log("OK");
     },
   };
-  const getItemGateway = new GetItemHttpGateway();
-  // const getItemGateway: GetItemGateway = {
-  //   execute: function (idItem: number): Promise<Item> {
-  //     const items: any = {
-  //       1: new Item(1, "Guitarra", 1000, 100, 30, 10, 3, 0.03, 100),
-  //       2: new Item(2, "Amplificador", 5000, 50, 50, 50, 20, 1, 1),
-  //       3: new Item(3, "Cabo", 30, 10, 10, 10, 1, 1, 1),
-  //     };
+  // const getItemGateway = new GetItemHttpGateway();
+  const getItemGateway: GetItemGateway = {
+    execute: function (idItem: number): Promise<Item> {
+      const items: any = {
+        1: new Item(1, "Guitarra", 1000, 100, 30, 10, 3, 0.03, 100),
+        2: new Item(2, "Amplificador", 5000, 50, 50, 50, 20, 1, 1),
+        3: new Item(3, "Cabo", 30, 10, 10, 10, 1, 1, 1),
+      };
 
-  //     return items[idItem];
-  //   },
-  // };
+      return items[idItem];
+    },
+  };
   const checkout = new Checkout(
     orderRepository,
     calculateFreightGateway,
     decrementStockGateway,
-    getItemGateway
+    getItemGateway,
+    queue
   );
   const output = await checkout.execute({
     from: "22060030",

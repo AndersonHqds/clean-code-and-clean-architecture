@@ -1,6 +1,6 @@
 import axios from "axios";
 
-test("Deve simular uma compra", async () => {
+test.skip("Deve simular uma compra", async () => {
   const response = await axios({
     url: "http://localhost:3000/orderPreview",
     method: "post",

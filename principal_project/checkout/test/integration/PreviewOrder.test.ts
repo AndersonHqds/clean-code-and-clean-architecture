@@ -2,7 +2,7 @@ import PreviewOrder from "../../src/application/PreviewOrder";
 import PgPromiseAdapter from "../../src/infra/database/PgPromiseAdapter";
 import GetItemHttpGateway from "../../src/infra/gateway/GetItemHttpGateway";
 
-test("Deve simular um pedido", async function () {
+test.skip("Deve simular um pedido", async function () {
   const connection = new PgPromiseAdapter();
   const getItemGateway = new GetItemHttpGateway();
   // const getItemGateway: GetItemGateway = {
