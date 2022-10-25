@@ -1,5 +1,5 @@
 import Checkout from "../../src/application/Checkout";
-import * as DecrementStockGateway from "../../src/application/DecrementStockGateway";
+import * as DecrementStockGateway from "../../src/application/gateway/DecrementStockGateway";
 import * as CalculateFreightGateway from "../../src/application/gateway/CalculateFreightGateway";
 import GetItemGateway from "../../src/application/gateway/GetItemGateway";
 import Item from "../../src/domain/entities/Item";

@@ -9,8 +9,8 @@ import OrderRepositoryDatabase from "./infra/repository/database/OrderRepository
 import { connect } from "amqplib";
 import CalculateFreightHttpGateway from "./infra/gateway/CalculateFreightHttpGateway";
 import RabbitMQAdapter from "./infra/queue/RabbitMqAdapter";
-import * as DecrementStockGateway from "./application/DecrementStockGateway";
-import Checkout2 from "./application/Checkout2";
+import * as DecrementStockGateway from "./application/gateway/DecrementStockGateway";
+import Checkout2 from "./application/Checkout";
 import CheckoutQueue from "./infra/queue/CheckoutQueue";
 
 async function init() {

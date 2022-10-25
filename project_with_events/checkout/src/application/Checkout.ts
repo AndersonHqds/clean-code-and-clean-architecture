@@ -3,7 +3,7 @@ import OrderPlaced from "../domain/event/OrderPlaced";
 import Queue from "../infra/queue/Queue";
 
 // usecase
-export default class Checkout2 {
+export default class Checkout {
   constructor(readonly queue: Queue) {}
 
   async execute(input: Input): Promise<void> {

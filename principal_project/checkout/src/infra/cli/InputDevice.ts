@@ -1,3 +1,3 @@
 export default interface InputDevice {
-  onData(callback: Function): void;
+	onData (callback: Function): void;
 }
